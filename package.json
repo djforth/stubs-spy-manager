@@ -1,6 +1,6 @@
 {
   "name": "@djforth/stubs-spy-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Jasmine spies manager",
   "main": "index.js",
   "babel": {
@@ -71,7 +71,9 @@
     "type": "git",
     "url": "git+https://github.com/djforth/stubs-spy-manager.git"
   },
-  "keywords": ["Jasmine"],
+  "keywords": [
+    "Jasmine"
+  ],
   "author": "Adrian Stainforth",
   "license": "MIT",
   "bugs": {
