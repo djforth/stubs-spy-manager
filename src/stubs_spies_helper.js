@@ -15,10 +15,10 @@ const setReturnType = (returnType, callback)=>{
   return (_.isFunction(callback)) ? 'callFake' : 'returnValue';
 };
 
-const CreateSpy = (spyManager)=>(spy)=>{
-  if (_.has(spy, 'callback') || _.has(spy, 'returnSpy')){
-    let {title, returnType, callback, returnSpy} = spy;
-    title = (_.isArray(title)) ? title : [title];
+const CreateSpy = (spyManager)=>(item)=>{
+  if (_.has(item, 'callback') || _.has(item, 'returnSpy')){
+    let {spy, returnType, callback, returnSpy} = item;
+    title = (_.isArray(spy)) ? spy : [spy];
     if (returnSpy){
       // spy = createSpy(spy);
       spyManager.addReturn.apply(this, title)('returnValue', spyManager.get(returnSpy));
@@ -34,10 +34,10 @@ const CreateSpy = (spyManager)=>(spy)=>{
   return spyManager.get(spy);
 };
 
-const CreateStub = (stubs, createSpy)=>(stub)=>{
-  if (_.has(stub, 'callback') || _.has(stub, 'spy')){
-    let {title, returnType, callback, spy} = stub;
-    title = (_.isArray(title)) ? title : [title];
+const CreateStub = (stubs, createSpy)=>(item)=>{
+  if (_.has(item, 'callback') || _.has(item, 'spy')){
+    let {stub, returnType, callback, spy} = item;
+    title = (_.isArray(stub)) ? stub : [stub];
     if (spy){
       spy = createSpy(spy);
       stubs.return.apply(this, title)('returnValue', spy);
