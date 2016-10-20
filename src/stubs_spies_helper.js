@@ -56,7 +56,7 @@ const CreateStub = (stubs, createSpy)=>(item)=>{
 const Adder = (typeManager, type)=>(types)=>{
   let type_objs = types.reduce((prev, curr)=>{
     if (_.isString(curr)) return prev.concat([curr]);
-    let [opts] = curr;
+    let opts = curr.opts;
     let title = curr[type];
     let has = _.find(prev, (p)=>_.isPlainObject(p) && p.title === title);
     if (has){
