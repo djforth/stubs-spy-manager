@@ -12,7 +12,7 @@ function spyCreator(Module, manager){
   return function(mod){
     let title = (_.isString(mod)) ? mod : mod.title;
     let spy    = manager.addSpy(mod).getSpy(title);
-    Module.__Rewire__(title, spy);
+    Module.__set__(title, spy);
     return {title: title, spy: spy};
   };
 }
