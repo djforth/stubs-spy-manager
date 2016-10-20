@@ -1,6 +1,6 @@
-import Stubs from './stubs_inner';
-import Spymanager from 'spy_manager';
-import Helper from 'stubs_spies_helper';
+import Stubs from './stub_inner';
+import Spymanager from './spy_manager';
+import Helper from './stubs_spies_helper';
 
 export default (module)=>{
   const spyManager = Spymanager();
