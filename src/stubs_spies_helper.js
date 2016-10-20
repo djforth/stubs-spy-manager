@@ -18,7 +18,7 @@ const setReturnType = (returnType, callback)=>{
 const CreateSpy = (spyManager)=>(item)=>{
   if (_.has(item, 'callback') || _.has(item, 'returnSpy')){
     let {spy, returnType, callback, returnSpy} = item;
-    title = (_.isArray(spy)) ? spy : [spy];
+    let title = (_.isArray(spy)) ? spy : [spy];
     if (returnSpy){
       // spy = createSpy(spy);
       spyManager.addReturn.apply(this, title)('returnValue', spyManager.get(returnSpy));
@@ -30,14 +30,14 @@ const CreateSpy = (spyManager)=>(item)=>{
     return spyManager.get(title[0]);
   }
 
-  spyManager.add(spy);
-  return spyManager.get(spy);
+  spyManager.add(item);
+  return spyManager.get(item);
 };
 
 const CreateStub = (stubs, createSpy)=>(item)=>{
   if (_.has(item, 'callback') || _.has(item, 'spy')){
     let {stub, returnType, callback, spy} = item;
-    title = (_.isArray(stub)) ? stub : [stub];
+    let title = (_.isArray(stub)) ? stub : [stub];
     if (spy){
       spy = createSpy(spy);
       stubs.return.apply(this, title)('returnValue', spy);
@@ -49,14 +49,15 @@ const CreateStub = (stubs, createSpy)=>(item)=>{
     return stubs.get(title[0]);
   }
 
-  stubs.add(stub);
-  return stubs.get(stub);
+  stubs.add(item);
+  return stubs.get(item);
 };
 
-const Adder = (typeManager)=>(types)=>{
+const Adder = (typeManager, type)=>(types)=>{
   let type_objs = types.reduce((prev, curr)=>{
     if (_.isString(curr)) return prev.concat([curr]);
-    let [title, opts] = curr;
+    let [opts] = curr;
+    let title = curr[type];
     let has = _.find(prev, (p)=>_.isPlainObject(p) && p.title === title);
     if (has){
       return prev.map((pr)=>{
@@ -79,8 +80,8 @@ const Adder = (typeManager)=>(types)=>{
 };
 
 export default (stubs, spyManager)=>{
-  const addSpies = Adder(spyManager);
-  const addStubs = Adder(stubs);
+  const addSpies = Adder(spyManager, 'spy');
+  const addStubs = Adder(stubs, 'stub');
   const createSpy = CreateSpy(spyManager);
   const createStub = CreateStub(stubs, createSpy);
 
