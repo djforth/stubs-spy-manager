@@ -80,8 +80,8 @@ module.exports =  function(Module){
     , revertAll: ()=>{
       _.forEach(spies, (mod)=>{
         resetSpy(mod.spy);
-        mod.revert();
-        // Module.__ResetDependency__(mod.title);
+        // mod.revert();
+        Module.__ResetDependency__(mod.title);
       });
       spies = [];
     }
@@ -89,8 +89,8 @@ module.exports =  function(Module){
       let mod = getItem(spies, title);
       resetSpy(mod.spy);
       mod.revert();
-      // Module.__ResetDependency__(mod.title);
-      spies = _.reject(spies, (s)=>s.title === title);
+      Module.__ResetDependency__(mod.title);
+      // spies = _.reject(spies, (s)=>s.title === title);
       return mod;
     }
     , setSpies: (spy_list)=>{
