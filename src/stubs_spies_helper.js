@@ -53,29 +53,65 @@ const CreateStub = (stubs, createSpy)=>(item)=>{
   return stubs.get(item);
 };
 
+const splitter = (item)=>{
+  let title, opts;
+  if (item.match(/\./)){
+    let split = item.split('.');
+    title = split[0];
+    opts = [split[1]];
+    return {title, opts};
+  }
+
+  return {title: item};
+};
+
+const matchItem = (list, title)=>{
+  let matched = list.filter((item)=>{
+    if (_.isString(item)) return item === title;
+    if (_.isPlainObject(item)) return item.title === title;
+
+    return false;
+  });
+
+  return matched[0];
+};
+
+const getIndexOf = (list, item)=>{
+  if (!_.isArray(list) || _.isUndefined(item)) return -1;
+  let titles = list.map((l)=>{
+    if (_.isString(l)) return l;
+    return l.title;
+  });
+  let title = (_.isString(item)) ? item : item.title;
+  return titles.indexOf(title);
+};
+
+const mergeItem = (list, item, data)=>{
+  let i = getIndexOf(list, item);
+  let newList = list.slice();
+  if (_.isPlainObject(item)){
+    data.opts = item.opts.concat(data.opts);
+  }
+  newList[i] = data;
+  return newList;
+};
+
+const createNewItem = (item)=>{
+  if (_.has(item, 'opts')) return [item];
+  return [item.title];
+};
+
 const Adder = (typeManager, type)=>(types)=>{
   let type_objs = types.reduce((prev, curr)=>{
     if (_.isString(curr)) return prev.concat([curr]);
-    let opts = curr.opts;
-    let title = curr[type];
-    let has = _.find(prev, (p)=>_.isPlainObject(p) && p.title === title);
+    let split = splitter(curr[type]);
+    let has = matchItem(prev, split.title);
     if (has){
-      return prev.map((pr)=>{
-        if (pr.title !==  title){
-          return pr;
-        }
-
-        pr.opts = pr.opts.concat([opts]);
-        return pr;
-      });
+      return mergeItem(prev, has, split);
     }
 
-    return prev.concat([{
-      title: title
-      , opts: [opts]
-    }]);
+    return prev.concat(createNewItem(split));
   }, []);
-  // console.log(type_objs)
   typeManager.add(type_objs);
 };
 
