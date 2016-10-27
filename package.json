@@ -15,7 +15,6 @@
     "env": {
       "karma": {
         "plugins": [
-          "add-module-exports",
           [
             "istanbul",
             {

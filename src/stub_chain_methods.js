@@ -34,8 +34,8 @@ function find(spies, title){
   return _.find(spies, (spy)=> spy.title === title);
 }
 
-module.exports = function(){
-  var spies = []
+let StubChain = ()=>{
+  var spies = [];
 
   var obj = {
     addConstructor:(construct, methods)=>{
@@ -60,11 +60,13 @@ module.exports = function(){
       if(_.isUndefined(spy)) return;
       return spy.spy;
     }
-    , removeAll:()=>{
+    , removeAll: ()=>{
       spies = []
     }
-  }
+  };
 
   return obj;
-}()
+}
+
+export default StubChain();
 

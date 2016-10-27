@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export const createStubsAndSpies = (stubs, spyManager)=>(items)=>{
+const createStubsAndSpies = (stubs, spyManager)=>(items)=>{
   stubs.add(items);
   let spyManger = items.map((item)=>`${item}Something`);
   spyManager.add(spyManger);

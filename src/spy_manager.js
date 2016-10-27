@@ -48,7 +48,7 @@ function resetSpyObj(obj){
   });
 }
 
-module.exports =  function(){
+export default function(){
   let spies = [];
 
   let obj = {

@@ -27,7 +27,7 @@ function resetSpy(spy){
   }
 }
 
-module.exports =  function(Module){
+export default function(Module){
   let spies  = [];
   let addSpy = spyCreator(Module, spyManager);
   let obj = {
