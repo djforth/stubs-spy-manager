@@ -1,6 +1,6 @@
 {
   "name": "@djforth/stubs-spy-manager",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Jasmine spies manager",
   "main": "index.js",
   "babel": {
