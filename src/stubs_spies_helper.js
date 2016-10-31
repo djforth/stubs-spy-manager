@@ -1,14 +1,22 @@
 import _ from 'lodash';
 
-const createStubsAndSpies = (stubs, spyManager)=>(items)=>{
-  stubs.add(items);
-  let spyManger = items.map((item)=>`${item}Something`);
-  spyManager.add(spyManger);
+// const createStubsAndSpies = (stubs, spyManager)=>(items)=>{
+//   stubs.add(items);
+//   let spyManger = items.map((item)=>`${item}Something`);
+//   spyManager.add(spyManger);
 
-  items.forEach((item)=>{
-    stubs.return(item)('returnValue', spyManager.get(`${item}Something`));
-  });
-};
+//   items.forEach((item)=>{
+//     stubs.return(item)('returnValue', spyManager.get(`${item}Something`));
+//   });
+// };
+
+const splitTitle = (t)=>{
+  if (_.isString(t)){
+    return (t.match(/\./)) ? t.split('.') : [t];
+  }
+
+  return t;
+}
 
 const setReturnType = (returnType, callback)=>{
   if (returnType) return returnType;
@@ -18,7 +26,7 @@ const setReturnType = (returnType, callback)=>{
 const CreateSpy = (spyManager)=>(item)=>{
   if (_.has(item, 'callback') || _.has(item, 'returnSpy')){
     let {spy, returnType, callback, returnSpy} = item;
-    let title = (_.isArray(spy)) ? spy : [spy];
+    let title = splitTitle(spy);
     if (returnSpy){
       // spy = createSpy(spy);
       spyManager.addReturn.apply(this, title)('returnValue', spyManager.get(returnSpy));
@@ -37,7 +45,7 @@ const CreateSpy = (spyManager)=>(item)=>{
 const CreateStub = (stubs, createSpy)=>(item)=>{
   if (_.has(item, 'callback') || _.has(item, 'spy')){
     let {stub, returnType, callback, spy} = item;
-    let title = (_.isArray(stub)) ? stub : [stub];
+    let title = splitTitle(stub);
     if (spy){
       spy = createSpy(spy);
       stubs.return.apply(this, title)('returnValue', spy);
