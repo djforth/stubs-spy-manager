@@ -76,8 +76,6 @@ describe('Stubs spies helper', function() {
     let mergeItem, data, list;
 
     beforeEach(()=>{
-
-
       mergeItem = Helper.__get__('mergeItem');
       list = ['foo', {title: 'bar', opts: ['foo']}];
     });

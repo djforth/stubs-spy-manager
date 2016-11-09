@@ -16,7 +16,7 @@ const splitTitle = (t)=>{
   }
 
   return t;
-}
+};
 
 const setReturnType = (returnType, callback)=>{
   if (returnType) return returnType;
