@@ -1,29 +1,42 @@
-import Stubs from './stub_inner';
-import Spymanager from './spy_manager';
-import Helper from './stubs_spies_helper';
+import {List} from 'immutable';
+import _ from 'lodash';
+import CompileSpies from './utils/compile_spies';
+import CreateSpies from './utils/create_spies';
+import CreateStubs from './utils/create_stubs';
+import GetSpy from './utils/get_spy';
+import ResetSpies from './utils/reset_spies';
+
+const lookForStub = (stubber)=>{
+  if (typeof stubber === 'boolean') return stubber;
+  if (stubber === 'stub') return true;
+  return false;
+};
 
 export default (module)=>{
-  const spyManager = Spymanager();
-  const stubsManager = Stubs(module);
-  const stubs_spies = Helper(stubsManager, spyManager);
-
-  return {
+  let spies_list = List();
+  let create_stubs = CreateStubs(module);
+  let stubs_reset, obj;
+  obj = {
     add: (list)=>{
-      stubs_spies(list);
+      spies_list = CompileSpies(list, spies_list);
+      return obj;
     }
-    , getSpy: (title)=>spyManager.get(title)
-    , getStub: (title)=>stubsManager.get(title)
-    , get: (type, title)=>{
-      if (type === 'stub') return stubsManager.get(title);
-      return spyManager.get(title);
+    , get: (title, stub = false)=>{
+      return GetSpy(spies_list, title, lookForStub(stub));
     }
-    , getSpyManager: ()=>spyManager
-    , getStubManager: ()=>stubsManager
+    , getList: ()=>spies_list
+    , make: ()=>{
+      spies_list = CreateSpies(spies_list);
+      let stubs_list = spies_list.filter((item)=>item.has('stub') && item.get('stub'));
+      stubs_reset = create_stubs(stubs_list);
+      return obj;
+    }
     , reset: ()=>{
-      afterEach(()=>{
-        spyManager.removeAll();
-        stubsManager.revertAll(); // Reverts All stubs
-      });
+      if (_.isFunction(stubs_reset)) stubs_reset();
+      spies_list.forEach(ResetSpies);
+      return obj;
     }
   };
+
+  return obj;
 };
