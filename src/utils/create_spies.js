@@ -64,7 +64,7 @@ const CreateCallBack = (add_callback)=>(item)=>{
   if (item.has('keys')){
     let spyObj = item.get('spy');
     item.get('keys').forEach((key)=>{
-      if (key.has('callback')){
+      if (Map.isMap(cb) && key.has('callback')){
         let spy = spyObj[key.get('title')];
         add_callback(spy, key.get('callback'));
       }
