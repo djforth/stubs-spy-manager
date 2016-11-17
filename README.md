@@ -150,6 +150,14 @@ So you can add spies and stubs anywhere in your tests then you must call make be
 
 ```
 
+## Get module
+
+Basically a short hand for Module.__GetDependency__('myFunction');
+
+```
+ let myFunction = spies_stubs.getFn('myFunction');
+```
+
 # Bug reports
 
 If you discover any bugs, feel free to create an issue on GitHub. Please add as much information as possible to help us fixing the possible bug. We also encourage you to help even more by forking and sending us a pull request.

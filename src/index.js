@@ -24,6 +24,7 @@ export default (module)=>{
     , get: (title, stub = false)=>{
       return GetSpy(spies_list, title, lookForStub(stub));
     }
+    , getFn: (mod)=>module.__GetDependancy__(mod)
     , getList: ()=>spies_list
     , make: ()=>{
       spies_list = CreateSpies(spies_list);

@@ -1,7 +1,7 @@
 import SpyManager from '../src';
 import _ from 'lodash';
 import Immutable, {List} from 'immutable';
-import Dummy, {Testing, Testing2} from './dummy/test';
+import Dummy, {Testing, Testing2, Testing3} from './dummy/test';
 
 describe('Spies & Stubs', function(){
   let list;
@@ -275,7 +275,6 @@ describe('Spies & Stubs', function(){
     });
 
     describe('stub method', function() {
-
       beforeEach(()=>{
         spies_stubs.add([
           {
@@ -355,5 +354,33 @@ describe('Spies & Stubs', function(){
       });
     });
 
+    describe('create spy & stub with same name', function() {
+      let spy;
+      beforeEach(()=>{
+        spies_stubs.add([
+          {
+            stub: 'test4_fn'
+            , callback: 'bar'
+          }
+          , {
+            spy: 'test4_fn'
+            , callback: 'foo'
+          }
+        ]);
+        spies_stubs.make();
+        rv = Testing3();
+      });
+
+      it('should return foo if foo called', function() {
+        expect(rv).toEqual('bar');
+        expect(spies_stubs.get('test4_fn', true)).toHaveBeenCalled();
+      });
+
+      it('should return bar if bar called', function() {
+        spy = spies_stubs.get('test4_fn');
+        expect(spy()).toEqual('foo');
+        expect(spy).toHaveBeenCalled();
+      });
+    });
   });
 });

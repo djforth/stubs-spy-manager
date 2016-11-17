@@ -32,7 +32,7 @@ describe('Merger', function(){
       mergeKeys = Merger.__GetDependency__('mergeKeys');
     });
 
-    it('should merge keys from item', function() {
+    it('should merge keys from item', function(){
       let new_item = Immutable.fromJS({
         title: 'foo'
         , stub: true
@@ -46,7 +46,7 @@ describe('Merger', function(){
       expect(keys.includes(Map({title: 'bar3', callback: 'foo'}))).toBeTruthy();
     });
 
-    it('should not merge if matching', function() {
+    it('should not merge if matching', function(){
       let new_item = Immutable.fromJS({
         title: 'foo'
         , stub: true
@@ -60,7 +60,7 @@ describe('Merger', function(){
       expect(keys.includes(Map({title: 'phil', callback: 'Phil'}))).toBeTruthy();
     });
 
-    it('should create keys if none exist', function() {
+    it('should create keys if none exist', function(){
       let new_item = Immutable.fromJS({
         title: 'foo'
         , stub: true
@@ -84,23 +84,21 @@ describe('Merger', function(){
     it('should return item if no matches', function(){
       let new_item = Map({title: 'bar2'});
       let updated = checkTitle(list, new_item);
-      expect(new_item.equals(updated)).toBeTruthy();
+      let new_list = list.push(new_item);
+      expect(new_list.equals(updated)).toBeTruthy();
     });
 
     it('should return item if matches stub', function(){
       let new_item = Map({title: 'bar', stub: true});
-      let updated = checkTitle(list, new_item);
+      let updated_list = checkTitle(list, new_item);
+      let updated = updated_list.last();
+      let current = updated_list.first();
       expect(new_item.equals(updated)).toBeFalsy();
       expect(updated.has('name')).toBeTruthy();
       expect(updated.get('name')).toEqual('bar-stub');
-    });
 
-    it('should return item if matches spy', function(){
-      let new_item = Map({title: 'bar', stub: false});
-      let updated = checkTitle(list, new_item);
-      expect(new_item.equals(updated)).toBeFalsy();
-      expect(updated.has('name')).toBeTruthy();
-      expect(updated.get('name')).toEqual('bar-spy');
+      expect(current.has('name')).toBeTruthy();
+      expect(current.get('name')).toEqual('bar-spy');
     });
   });
 
@@ -122,7 +120,7 @@ describe('Merger', function(){
       });
 
       spy = jasmine.createSpy('mergeKeys');
-      checkTitle = jasmine.createSpy('checkTitle').and.callFake((list, item)=>item);
+      checkTitle = jasmine.createSpy('checkTitle').and.callFake((list, item)=>list.push(item));
       spy.and.returnValue(update_item);
       Merger.__Rewire__('mergeKeys', spy);
       Merger.__Rewire__('checkTitle', checkTitle);

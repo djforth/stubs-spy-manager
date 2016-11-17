@@ -10,12 +10,18 @@ const mergeKeys = (item, newitem)=>{
   return item.set('keys', current.concat(keys));
 };
 
+const makeName = (item)=>{
+  let prefix = (item.get('stub')) ? '-stub' : '-spy';
+  let name = item.get('title') + prefix;
+  return item.set('name', name);
+};
+
 const checkTitle = (list, newitem)=>{
   let matched = list.find((item)=>item.get('title') === newitem.get('title'));
-  if (!matched) return newitem;
-  let prefix = (newitem.get('stub')) ? '-stub' : '-spy';
-  let name = newitem.get('title') + prefix;
-  return newitem.set('name', name)
+  if (!matched) return list.push(newitem);
+  newitem = makeName(newitem);
+  list = list.set(list.indexOf(matched), makeName(matched));
+  return list.push(newitem);
 };
 
 export default (list, newitem)=>{
@@ -30,5 +36,5 @@ export default (list, newitem)=>{
     return list.set(index, mergeKeys(matched, newitem));
   }
 
-  return list.push(checkTitle(list, newitem));
+  return checkTitle(list, newitem);
 };

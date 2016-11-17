@@ -31,6 +31,7 @@ const getTitleAndKey = (t)=>{
 export default (list, title, stub = false)=>{
   if (!List.isList(list) || list.size === 0) return null;
   let tk = getTitleAndKey(title);
+
   if (tk === null) return tk;
   let spyMap = FindSpies(list, tk.title, stub);
   if (!Map.isMap(spyMap) || !spyMap.has('spy')) return null;

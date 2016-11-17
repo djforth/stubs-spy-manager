@@ -7,6 +7,8 @@ const test3_fn = {
   , bar: ()=>'Testing 11, 12'
 };
 
+const test4_fn = ()=>'Testing 123';
+
 export default ()=>{
   return test_fn() + test1_fn();
 };
@@ -14,3 +16,5 @@ export default ()=>{
 export const Testing = ()=>test2_fn;
 
 export const Testing2 = ()=>test3_fn;
+
+export const Testing3 = ()=>test4_fn();
