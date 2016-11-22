@@ -1,3 +1,7 @@
 /src
 /spec
 .apconfig
+.babelrc
+.eslintrc.js
+__archive
+yarn.lock
