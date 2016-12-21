@@ -1,6 +1,6 @@
 {
   "name": "@djforth/stubs-spy-manager",
-  "version": "3.0.1-beta1",
+  "version": "3.0.1-beta2",
   "description": "Jasmine spies manager",
   "main": "index.js",
   "repository": "https://github.com/djforth/stubs-spy-manager.git",
@@ -9,24 +9,25 @@
   "peerDependencies": {
     "immutable": "^3.8.1",
     "jasmine-core": "^2.5.2",
-    "lodash": "^4.17.2"
+    "lodash": "^4.*.*"
   },
   "devDependencies": {
-    "@djforth/ap_karma_wp": "^1.0.4",
-    "@djforth/ap_utils": "^3.0.1",
-    "babel-core": "^6.18.2",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.8",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-es2016": "^6.16.0",
-    "babel-preset-es2017": "^6.16.0",
-    "eslint": "^3.10.2",
-    "eslint-config-morsedigital": "^1.1.0",
-    "immutable": "^3.8.1",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "@djforth/ap_karma_wp": "~1.0.4",
+    "@djforth/ap_utils": "~3.0.1",
+    "babel-core": "~6.21.0",
+    "babel-eslint": "~7.1.1",
+    "babel-loader": "~6.2.8",
+    "babel-plugin-add-module-exports": "~0.2.1",
+    "babel-polyfill": "~6.20.0",
+    "babel-preset-es2015": "~6.18.0",
+    "babel-preset-es2016": "~6.16.0",
+    "babel-preset-es2017": "~6.16.0",
+    "eslint": "~3.12.2",
+    "eslint-config-morsedigital": "~1.1.0",
+    "immutable": "~3.8.1",
+    "lodash": "^4.17.2",
+    "webpack": "~1.14.0",
+    "webpack-dev-server": "~1.16.2"
   },
   "scripts": {
     "build": "babel src -x '.js' -d lib",
