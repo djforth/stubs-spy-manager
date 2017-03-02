@@ -7,14 +7,17 @@
   "author": "Adrian Stainforth <adrian.stainforth@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "babel-jest": "^19.0.0",
-    "immutable": "^3.8.1",
-    "jest": "^19.0.2",
-    "lodash": "^4.*.*"
+    "babel-jest": ">=19.0.0 < 20",
+    "immutable": ">=3.8.0 < 4",
+    "jest": ">=19.0.0 < 20",
+    "lodash": ">=4.17.4 <5"
   },
   "devDependencies": {
+    "@djforth/jest-matchers": "^1.0.1",
     "babel-core": "~6.23.1",
     "babel-eslint": "~7.1.1",
+    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-lodash-modularize": "^0.3.2",
     "babel-jest": "^19.0.0",
     "babel-plugin-add-module-exports": "~0.2.1",
     "babel-plugin-rewire": "^1.0.0",
