@@ -8,18 +8,18 @@
     "add-module-exports"
   ],
   "env": {
-    "karma": {
+    "test": {
       "plugins": [
         [
           "istanbul",
           {
             "exclude": [
-              "**/*_spec.js"
+              "**/*.spec.js"
             ]
           }
         ],
         "rewire"
       ]
-    }
+    },
   }
 }

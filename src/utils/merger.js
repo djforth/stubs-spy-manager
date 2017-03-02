@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {List, Map} from 'immutable';
+import {List} from 'immutable';
 
 const mergeKeys = (item, newitem)=>{
   let current = item.get('keys');

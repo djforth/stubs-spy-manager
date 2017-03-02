@@ -4,17 +4,16 @@ function addMethods(ClassConst, methods){
   return _.map(methods, (m)=>{
     let title = (_.isString(m)) ? m : m.title;
     let spy = jasmine.createSpy(title);
-    // if (m.value && m.type) withReturn(spy, m.type, m.value);
     ClassConst.prototype[title] = spy;
     return {title: title, spy: spy};
   });
 }
 
 export default (title, methods)=>{
-  var init  = jasmine.createSpy('init');
+  let init  = jasmine.createSpy('init');
   let spies = [{title: 'init', spy: init}];
-  var ConstClass = function(){
-    init.apply(this, arguments);
+  let ConstClass = function(...args){
+    init(...args);
   };
 
   if (_.isArray(methods) && !_.isEmpty(methods)){

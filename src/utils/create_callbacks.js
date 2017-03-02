@@ -1,7 +1,7 @@
 
 export const CheckCallBack = (item)=>{
   if (item.hasOwnProperty('callback')) return 1;
-  if (item.hasOwnProperty('stub')) {
+  if (item.hasOwnProperty('stub')){
     return item.hasOwnProperty('spy') ? 2 : 0;
   }
 

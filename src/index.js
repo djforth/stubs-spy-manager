@@ -6,6 +6,7 @@ import CreateStubs from './utils/create_stubs';
 import GetSpy from './utils/get_spy';
 import ResetSpies from './utils/reset_spies';
 
+
 const lookForStub = (stubber)=>{
   if (typeof stubber === 'boolean') return stubber;
   if (stubber === 'stub') return true;
@@ -28,11 +29,14 @@ export default (module)=>{
     , getList: ()=>spies_list
     , make: ()=>{
       spies_list = CreateSpies(spies_list);
-      let stubs_list = spies_list.filter((item)=>item.has('stub') && item.get('stub'));
+      let stubs_list = spies_list.filter(
+        (item)=>item.has('stub') &&
+          item.get('stub')
+        );
       stubs_reset = create_stubs(stubs_list);
       return obj;
     }
-    , reset: ()=>{
+    , reset(){
       if (_.isFunction(stubs_reset)) stubs_reset();
       spies_list.forEach(ResetSpies);
       return obj;

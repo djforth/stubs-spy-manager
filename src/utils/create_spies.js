@@ -1,32 +1,40 @@
-import Immutable, {Map} from 'immutable';
+import {Map} from 'immutable';
 import _ from 'lodash';
 
 export const checkObj = (im)=>Map.isMap(im) &&
         im.has('keys') &&
         im.get('keys') !== undefined;
 
-const getSpyName = (item)=>{
-  if (item.has('name')) return item.get('name');
-  return item.get('title');
-};
+// const getSpyName = (item)=>{
+//   if (item.has('name')) return item.get('name');
+//   return item.get('title');
+// };
 
-export const getKeys = (item)=>{
-  let keys = item.get('keys');
-  return keys.map((key)=>{
-    if (Map.isMap(key)) return key.get('title');
-    return key;
-  }).toArray();
+// const getKeys = (item)=>{
+//   let keys = item.get('keys');
+//   return keys.map((key)=>{
+//     if (Map.isMap(key)) return key.get('title');
+//     return key;
+//   }).toArray();
+// };
+
+const CreateMockObj = (item)=>{
+  return item.get('keys').reduce((obj, key)=>{
+    if (Map.isMap(key)){
+      key = key.get('title');
+    }
+    return Object.assign(obj, {[key]: jest.fn()});
+  }, {});
 };
 
 export const AddSpy = (item)=>{
   if (!Map.isMap(item) || !item.has('title')) return null;
 
-  let title = getSpyName(item);
   if (checkObj(item)){
-    return jasmine.createSpyObj(title, getKeys(item));
+    return CreateMockObj(item);
   }
 
-  return jasmine.createSpy(title);
+  return jest.fn();
 };
 
 const AddCallBack = (get_callback)=>(spy, cb)=>{
@@ -35,15 +43,24 @@ const AddCallBack = (get_callback)=>(spy, cb)=>{
   if (callback === null) return;
 
   if (_.isFunction(callback) && !returnSpy){
-    spy.and.callFake(callback);
-    return;
-  }
-  if (_.isArray(callback)){
-    spy.and.returnValues.apply(this, callback);
+    spy.mockImplementation(callback);
     return;
   }
 
-  spy.and.returnValue(callback);
+  if (_.isArray(callback)){
+    callback.forEach((cb, i)=>{
+      let rv = (_.isFunction(cb)) ? cb : ()=>cb;
+      if (i < callback.length - 1){
+        spy.mockImplementationOnce(rv);
+        return;
+      }
+      spy.mockImplementation(rv);
+    });
+    // spy.and.returnValues.apply(this, callback);
+    return;
+  }
+
+  spy.mockImplementation(()=>callback);
 };
 
 const GetCallBack = (list)=>(cb)=>{

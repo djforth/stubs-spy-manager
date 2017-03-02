@@ -1,5 +1,0 @@
-{
-  "karma": {
-    "input": "./spec/test_bundle.js"
-  }
-}

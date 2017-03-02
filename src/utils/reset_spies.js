@@ -13,9 +13,9 @@ export default (item)=>{
     let spy = item.get('spy');
     let keys = getKeys(item);
     keys.forEach((key)=>{
-      spy[key].calls.reset();
+      spy[key].mockReset();
     });
   } else {
-    item.get('spy').calls.reset();
+    item.get('spy').mockReset();
   }
 };

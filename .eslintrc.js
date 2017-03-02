@@ -1,5 +1,5 @@
 module.exports = {
-  "extends": "morsedigital",
+  "extends": "morsedigital-jest",
   "globals": {
     "fdescribe": false,
     "describe": false,

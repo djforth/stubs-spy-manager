@@ -5,7 +5,7 @@ A module to help manage creating spies and stubs in jasmine utilising babel-plug
 Install:
 
 ```bash
-npm i --save-dev @djforth/stubs-spy-manager
+yarn -D @djforth/stubs-spy-manager
 ```
 
 ## Set up

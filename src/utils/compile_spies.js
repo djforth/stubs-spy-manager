@@ -1,4 +1,4 @@
-import Immutable, {List, Map} from 'immutable';
+import Immutable, {List} from 'immutable';
 import Merger from './merger';
 
 import GetTitleAndKeys, {
