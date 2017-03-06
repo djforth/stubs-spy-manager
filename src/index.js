@@ -28,6 +28,11 @@ export default (module)=>{
     , clear(){
       if (_.isFunction(stubs_reset)) stubs_reset();
       spies_list.forEach(ClearSpy);
+      // spies_list = [];
+      return obj;
+    }
+    , clearList(){
+      obj.clear();
       spies_list = [];
       return obj;
     }
