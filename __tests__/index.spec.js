@@ -149,32 +149,30 @@ describe('Spies & Stubs', function(){
       });
     });
 
-    describe('reset', function(){
-      let ResetSpies, rv;
+    describe('clear', function(){
+      let ClearSpy, rv;
       beforeEach(()=>{
         list = Immutable.fromJS([
           {title: 'foo', stub: false}
           , {title: 'bar', stub: true}
         ]);
         // reset_stubs =
-        ResetSpies = jest.fn();
+        ClearSpy = jest.fn();
         let cs = jest.fn();
         cs.mockReturnValue(list);
         SpyManager.__Rewire__('CreateSpies', cs);
-
-        SpyManager.__Rewire__('ResetSpies', ResetSpies);
-
-        rv = spies_stubs.make().reset();
+        SpyManager.__Rewire__('ClearSpy', ClearSpy);
+        rv = spies_stubs.make().clear();
       });
 
       afterEach(function(){
         SpyManager.__ResetDependency__('CreateSpies');
-        SpyManager.__ResetDependency__('ResetSpies');
+        SpyManager.__ResetDependency__('ClearSpy');
       });
 
-      it('should call ResetSpies', function(){
-        // console.log("EH", ResetSpies.mock.calls)
-        expect(ResetSpies).toHaveBeenCalledTimes(2);
+      it('should call ClearSpy', function(){
+        // console.log("EH", ClearSpy.mock.calls)
+        expect(ClearSpy).toHaveBeenCalledTimes(2);
       });
 
       it('should call stubs_reset', function(){
@@ -185,205 +183,34 @@ describe('Spies & Stubs', function(){
         expect(rv).toEqual(spies_stubs);
       });
     });
-  });
 
-  describe('Full Stack test', function(){
-    let spies_stubs = SpyManager(Dummy);
-    let rv;
-    beforeEach(()=>{
-      spies_stubs.add([
-        {
-          stub: 'test1_fn'
-          , callback: 'bar'
-        }
-      ]);
-    });
-    describe('Create Spy', function(){
-      let spy;
+    describe('reset', function(){
+      let ResetSpy, rv;
       beforeEach(()=>{
-        spies_stubs.add([
-          {
-            spy: 'new_spy'
-            , callback: 'foo'
-          }
+        list = Immutable.fromJS([
+          {title: 'foo', stub: false}
+          , {title: 'bar', stub: true}
         ]);
-        spies_stubs.make();
-        spy = spies_stubs.get('new_spy');
-        rv = spy();
+        let cs = jest.fn().mockReturnValue(list);
+        SpyManager.__Rewire__('CreateSpies', cs);
+        ResetSpy = jest.fn();
+        SpyManager.__Rewire__('ResetSpy', ResetSpy);
+
+        rv = spies_stubs.make().reset();
       });
 
-      it('should return foo', function(){
-        expect(rv).toEqual('foo');
+      afterEach(function(){
+        SpyManager.__ResetDependency__('CreateSpies');
+        SpyManager.__ResetDependency__('ResetSpy');
       });
 
-      it('should call spy', function(){
-        expect(spy).toHaveBeenCalled();
-      });
-    });
-
-    describe('Create Spy Object', function(){
-      let spy;
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            spy: 'new_spy_obj.foo'
-            , callback: 'foo'
-          }
-          , {
-            spy: 'new_spy_obj.bar'
-            , callback: 'bar'
-          }
-        ]);
-        spies_stubs.make();
-        spy = spies_stubs.get('new_spy_obj');
+      it('should call ResetSpy', function(){
+        // console.log("EH", ResetSpy.mock.calls)
+        expect(ResetSpy).toHaveBeenCalledTimes(2);
       });
 
-      it('should return foo if foo called', function(){
-        rv = spy.foo();
-        expect(rv).toEqual('foo');
-        expect(spies_stubs.get('new_spy_obj.foo')).toHaveBeenCalled();
-      });
-
-      it('should return bar if bar called', function(){
-        rv = spy.bar();
-        expect(rv).toEqual('bar');
-        expect(spies_stubs.get('new_spy_obj.bar')).toHaveBeenCalled();
-      });
-    });
-
-    describe('Create Spy that returns spy', function(){
-      let spy;
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            spy: 'new_spy_return'
-            , returnSpy: 'return_spy'
-          }
-          , {
-            spy: 'return_spy'
-            , callback: 'foo'
-          }
-        ]);
-        spies_stubs.make();
-        spy = spies_stubs.get('new_spy_return');
-        rv = spy();
-      });
-
-      it('should return \'return_spy\'', function(){
-        expect(rv).toEqual(spies_stubs.get('return_spy'));
-      });
-
-      it('should call spy', function(){
-        expect(spy).toHaveBeenCalled();
-      });
-    });
-
-    describe('stub method', function(){
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            stub: 'test_fn'
-            , callback: 'foo'
-          }
-        ]);
-        spies_stubs.make();
-        rv = Dummy();
-      });
-
-      it('should stub the methods', function(){
-        expect(rv).toEqual('foobar');
-      });
-
-      it('should call stubs', function(){
-        let stub1 = spies_stubs.get('test_fn');
-        expect(stub1).toHaveBeenCalled();
-        let stub2 = spies_stubs.get('test1_fn');
-        expect(stub2).toHaveBeenCalled();
-      });
-    });
-
-    describe('stub method return spy', function(){
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            stub: 'test2_fn'
-            , spy: 'test'
-          }
-          , {
-            spy: 'test'
-            , callback: 'foo'
-          }
-        ]);
-        spies_stubs.make();
-        rv = Testing()();
-      });
-
-      it('should stub the methods', function(){
-        expect(rv).toEqual(spies_stubs.get('test'));
-      });
-
-      it('should call stubs', function(){
-        let stub1 = spies_stubs.get('test2_fn');
-        expect(stub1).toHaveBeenCalled();
-      });
-    });
-
-    describe('Create Stub that returns spy obj', function(){
-      let spy;
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            stub: 'test3_fn.foo'
-            , callback: 'foo'
-          }
-          , {
-            stub: 'test3_fn.bar'
-            , callback: 'bar'
-          }
-        ]);
-        spies_stubs.make();
-        spy = Testing2();
-      });
-
-      it('should return foo if foo called', function(){
-        rv = spy.foo();
-        expect(rv).toEqual('foo');
-        expect(spies_stubs.get('test3_fn.foo')).toHaveBeenCalled();
-      });
-
-      it('should return bar if bar called', function(){
-        rv = spy.bar();
-        expect(rv).toEqual('bar');
-        expect(spies_stubs.get('test3_fn.bar')).toHaveBeenCalled();
-      });
-    });
-
-    describe('create spy & stub with same name', function(){
-      let spy;
-      beforeEach(()=>{
-        spies_stubs.add([
-          {
-            stub: 'test4_fn'
-            , callback: 'bar'
-          }
-          , {
-            spy: 'test4_fn'
-            , callback: 'foo'
-          }
-        ]);
-        spies_stubs.make();
-        rv = Testing3();
-      });
-
-      it('should return foo if foo called', function(){
-        expect(rv).toEqual('bar');
-        expect(spies_stubs.get('test4_fn', true)).toHaveBeenCalled();
-      });
-
-      it('should return bar if bar called', function(){
-        spy = spies_stubs.get('test4_fn');
-        expect(spy()).toEqual('foo');
-        expect(spy).toHaveBeenCalled();
+      it('should return object', function(){
+        expect(rv).toEqual(spies_stubs);
       });
     });
   });

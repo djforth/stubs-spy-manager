@@ -1,6 +1,6 @@
 {
   "name": "@djforth/stubs-spy-manager-jest",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Jest mocks, spies and stubs manager",
   "main": "index.js",
   "repository": "https://github.com/djforth/stubs-spy-manager.git",

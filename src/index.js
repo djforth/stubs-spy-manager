@@ -4,7 +4,10 @@ import CompileSpies from './utils/compile_spies';
 import CreateSpies from './utils/create_spies';
 import CreateStubs from './utils/create_stubs';
 import GetSpy from './utils/get_spy';
-import ResetSpies from './utils/reset_spies';
+import {
+  ClearSpy
+  , ResetSpy
+}  from './utils/reset_spies';
 
 
 const lookForStub = (stubber)=>{
@@ -22,6 +25,12 @@ export default (module)=>{
       spies_list = CompileSpies(list, spies_list);
       return obj;
     }
+    , clear(){
+      if (_.isFunction(stubs_reset)) stubs_reset();
+      spies_list.forEach(ClearSpy);
+      spies_list = [];
+      return obj;
+    }
     , get: (title, stub = false)=>{
       return GetSpy(spies_list, title, lookForStub(stub));
     }
@@ -37,8 +46,7 @@ export default (module)=>{
       return obj;
     }
     , reset(){
-      if (_.isFunction(stubs_reset)) stubs_reset();
-      spies_list.forEach(ResetSpies);
+      spies_list.forEach(ResetSpy);
       return obj;
     }
   };

@@ -1,7 +1,7 @@
 {
   "browser": true,
-  "collectCoverageFrom": ["<rootDir>/src/**/*.{js,jsx}", "!<rootDir>/__tests__/**/*.js"],
-  "coveragePathIgnorePatterns": ["<rootDir>/node_modules/", "./__helpers__/", "./__dummy__/"],
+  "collectCoverageFrom": ["<rootDir>/src/**/*.{js,jsx}", "!<rootDir>/__tests__/__dummy__/test.js"],
+  "coveragePathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/__tests__/__helpers__/", "<rootDir>/__tests__/__dummy__/"],
   "roots": [
     "<rootDir>/__tests__/",
     "<rootDir>/src/"
@@ -19,7 +19,7 @@
   "setupTestFrameworkScriptFile": "@djforth/jest-matchers",
   "testPathIgnorePatterns": [
     "<rootDir>/__tests__/__dummy__",
-    "<rootDir>/__tests__/__helpers__",
+    "<rootDir>/__helpers__",
     "<rootDir>/lib",
     "<rootDir>/node_modules",
     "<rootDir>/bower_components",
