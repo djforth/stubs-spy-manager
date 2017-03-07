@@ -33,7 +33,7 @@ export default (module)=>{
     }
     , clearList(){
       obj.clear();
-      spies_list = [];
+      spies_list = List();
       return obj;
     }
     , get: (title, stub = false)=>{
