@@ -22,14 +22,18 @@ export const ClearSpy = (item)=>{
   }
 };
 
+const mockReset = (spy)=>{
+  if (_.isFunction(spy.mockReset)) spy[key].mockReset();
+}
+
 export const ResetSpy = (item)=>{
   if (checkObj(item) && checkSpy(item)){
     let spy = item.get('spy');
     let keys = Object.keys(spy);
     keys.forEach((key)=>{
-      spy[key].mockReset();
+      mockReset(spy[key]);
     });
   } else {
-    item.get('spy').mockReset();
+    mockReset(item.get('spy'));
   }
 };
