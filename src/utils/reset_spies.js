@@ -23,8 +23,10 @@ export const ClearSpy = (item)=>{
 };
 
 const mockReset = (spy)=>{
-  if (_.isFunction(spy.mockReset)) spy.mockReset();
-}
+  if (spy &&
+      _.has(spy, 'mockReset') &&
+      _.isFunction(spy.mockReset)) spy.mockReset();
+};
 
 export const ResetSpy = (item)=>{
   if (checkObj(item) && checkSpy(item)){
