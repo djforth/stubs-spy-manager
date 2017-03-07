@@ -23,7 +23,7 @@ export const ClearSpy = (item)=>{
 };
 
 const mockReset = (spy)=>{
-  if (_.isFunction(spy.mockReset)) spy[key].mockReset();
+  if (_.isFunction(spy.mockReset)) spy.mockReset();
 }
 
 export const ResetSpy = (item)=>{
