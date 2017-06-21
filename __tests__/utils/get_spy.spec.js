@@ -165,8 +165,11 @@ describe('get spies', function(){
       expect(calls).toContain('foo');
     });
 
-    it('should return spy object if found', function(){
-      let spy = jasmine.createSpyObj('foo', ['bar']);
+    test('should return spy object if found', function(){
+      // let spy = jasmine.createSpyObj('foo', ['bar']);
+      let spy = {
+        bar: jest.fn()
+      };
       tk = {title: 'foo', key: 'bar'};
       spyMap = Map({spy});
       let returnSpy = GetSpy(list, 'bar');

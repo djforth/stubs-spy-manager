@@ -2,7 +2,7 @@ import SpyManager from '../src';
 import Immutable, {List} from 'immutable';
 import Dummy, {Testing, Testing2, Testing3} from './__dummy__/test';
 
-describe.only('Full Stack test', function(){
+describe('Full Stack test', function(){
   let spies_stubs = SpyManager(Dummy);
   let rv;
   beforeEach(()=>{
@@ -15,7 +15,7 @@ describe.only('Full Stack test', function(){
   });
 
   afterEach(()=>{
-    spies_stubs.reset()
+    spies_stubs.reset();
   });
 
   describe('Create Spy', function(){
