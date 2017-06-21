@@ -1,15 +1,15 @@
 {
   "name": "@djforth/stubs-spy-manager-jest",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Jest mocks, spies and stubs manager",
   "main": "index.js",
   "repository": "https://github.com/djforth/stubs-spy-manager.git",
   "author": "Adrian Stainforth <adrian.stainforth@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "babel-jest": ">=19.0.0 < 20",
+    "babel-jest": ">=19.0.0 < 21",
     "immutable": ">=3.8.0 < 4",
-    "jest": ">=19.0.0 < 20",
+    "jest": ">=19.0.0 < 21",
     "lodash": ">=4.17.4 <5"
   },
   "devDependencies": {
